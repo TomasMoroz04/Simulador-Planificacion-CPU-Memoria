@@ -1,0 +1,26 @@
+# Archivos compilados de Maven y Java
+target/
+*.class
+*.jar
+*.war
+*.ear
+
+# Archivos de la Base de Datos H2 generados en tiempo de ejecución
+simuladorDB.mv.db
+simuladorDB.trace.db
+
+# Reportes y gráficos generados localmente
+Reportes Simulacion/
+grafico_temp.png
+
+# Archivos de configuración de NetBeans / IDEs
+nbactions.xml
+nb-configuration.xml
+nbproject/private/
+.idea/
+*.iml
+.vscode/
+
+# Archivos de sistema
+.DS_Store
+Thumbs.db
