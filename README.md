@@ -1,190 +1,250 @@
-# 🖥️ Simulador de Planificación de CPU y Paginación de Memoria
+<h1 align="center">🖥️ Simulador de Planificación de CPU y Gestión de Memoria</h1>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white" alt="Java">
-  <img src="https://img.shields.io/badge/Apache%20Maven-C71A36?style=for-the-badge&logo=Apache%20Maven&logoColor=white" alt="Apache Maven">
-  <img src="https://img.shields.io/badge/Hibernate-59666C?style=for-the-badge&logo=Hibernate&logoColor=white" alt="Hibernate">
-  <img src="https://img.shields.io/badge/H2%20Database-004088?style=for-the-badge&logo=databricks&logoColor=white" alt="H2 Database">
-  <img src="https://img.shields.io/badge/GUI-Java%20Swing-blue?style=for-the-badge" alt="Java Swing">
+  Simulador interactivo y multihilo de conceptos fundamentales de Sistemas Operativos, desarrollado en Java.
 </p>
 
-Simulador interactivo y multihilo de **Sistemas Operativos**, desarrollado en Java. El proyecto modela el funcionamiento interno del sistema operativo mediante la **planificación de procesos a corto plazo**, la **gestión de memoria virtual mediante paginación bajo demanda (MMU)** y la **sincronización de procesos concurrentes**.
+<p align="center">
+  <img src="https://skillicons.dev/icons?i=java" alt="Java" height="64">
+</p>
 
-Además, integra patrones de diseño de software, persistencia relacional mediante ORM, una interfaz gráfica de escritorio y generación de reportes estadísticos en PDF.
-
----
-
-## 📑 Índice
-
-- [🚀 Características principales](#-características-principales)
-  - [Planificación de CPU](#1-planificación-de-cpu)
-  - [Gestión de memoria y MMU](#2-gestión-de-memoria-y-mmu)
-  - [Concurrencia y sincronización](#3-concurrencia-y-sincronización-en-tiempo-real)
-  - [Persistencia y base de datos](#4-persistencia-orm-y-base-de-datos-embebida)
-  - [Interfaz gráfica y reportes](#5-interfaz-gráfica-mvc-y-reportes-ejecutivos-pdf)
-- [🛠️ Stack tecnológico](#️-stack-tecnológico-y-arquitectura)
-- [📂 Estructura del proyecto](#-estructura-del-proyecto)
-- [⚙️ Instalación y ejecución](#️-instalación-y-ejecución)
-- [🗄️ Acceso a la base de datos H2](#️-acceso-a-la-base-de-datos-h2-en-vivo)
-- [📊 Fórmulas y métricas](#-fórmulas-y-métricas-calculadas)
+<p align="center">
+  <img src="https://img.shields.io/badge/Java-25-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white" alt="Java 25">
+  <img src="https://img.shields.io/badge/Apache%20Maven-Build-C71A36?style=for-the-badge&logo=apachemaven&logoColor=white" alt="Apache Maven">
+  <img src="https://img.shields.io/badge/Java%20Swing-Desktop%20GUI-4479A1?style=for-the-badge" alt="Java Swing">
+  <img src="https://img.shields.io/badge/Hibernate-5.6.15-59666C?style=for-the-badge&logo=hibernate&logoColor=white" alt="Hibernate 5.6.15">
+  <img src="https://img.shields.io/badge/H2-2.2.224-004088?style=for-the-badge" alt="H2 Database 2.2.224">
+</p>
 
 ---
 
+<a id="contenido"></a>
+## 📑 Contenido
+
+- [👀 Vista general](#vista-general)
+- [🖼️ Capturas de pantalla](#capturas-de-pantalla)
+- [🚀 Características principales](#caracteristicas-principales)
+  - [Planificación de CPU](#planificacion-de-cpu)
+  - [Gestión de memoria y MMU](#gestion-de-memoria-y-mmu)
+  - [Concurrencia y sincronización](#concurrencia-y-sincronizacion)
+  - [Persistencia con JPA, Hibernate y H2](#persistencia-con-jpa-hibernate-y-h2)
+  - [Interfaz gráfica y reportes](#interfaz-grafica-y-reportes)
+- [🛠️ Stack tecnológico](#stack-tecnologico)
+- [🏗️ Organización del proyecto](#organizacion-del-proyecto)
+- [⚙️ Requisitos e instalación](#requisitos-e-instalacion)
+- [▶️ Ejecución](#ejecucion)
+- [🗄️ Consola web de H2](#consola-web-de-h2)
+- [📊 Métricas de simulación](#metricas-de-simulacion)
+- [📄 Licencia](#licencia)
+
+---
+
+<a id="vista-general"></a>
+## 👀 Vista general
+
+El proyecto permite experimentar con la **planificación de procesos a corto plazo**, la **paginación de memoria**, la **traducción de direcciones mediante una MMU** y distintos mecanismos de **concurrencia y sincronización**.
+
+La aplicación combina una interfaz gráfica de escritorio desarrollada con Java Swing, un motor de simulación por *ticks*, persistencia local mediante JPA/Hibernate y una base de datos H2. También permite comparar los resultados de los algoritmos de planificación y exportar reportes en PDF.
+
+Su propósito es representar de manera visual y controlada cómo las decisiones de planificación y administración de memoria afectan la ejecución de un conjunto de procesos.
+
+<a id="capturas-de-pantalla"></a>
+## 🖼️ Capturas de pantalla
+
+<p align="center">
+  <img src="Screenshots/Ventana%20Principal%201.jpeg" alt="Ventana principal del simulador" width="48%">
+  <img src="Screenshots/Ventana%20Principal%202.jpeg" alt="Segunda vista de la ventana principal del simulador" width="48%">
+</p>
+
+<p align="center">
+  <img src="Screenshots/H2_Consola.jpeg" alt="Consola web de la base de datos H2" width="80%">
+</p>
+
+---
+
+<a id="caracteristicas-principales"></a>
 ## 🚀 Características principales
 
+<a id="planificacion-de-cpu"></a>
 ### 1. Planificación de CPU
 
-Implementación polimórfica de algoritmos clásicos de planificación mediante el **patrón Strategy**, utilizando la interfaz `PlanificadorStrategy`.
+El módulo de planificación utiliza el patrón **Strategy** mediante la interfaz `PlanificadorStrategy`, lo que permite seleccionar distintos algoritmos sin modificar el motor principal de simulación.
+
+| Algoritmo | Tipo | Criterio de selección |
+|---|---|---|
+| **FCFS** (*First-Come, First-Served*) | No apropiativo | Ejecuta los procesos en orden de llegada. |
+| **SJF** (*Shortest Job First*) | No apropiativo | Selecciona el proceso listo con la ráfaga de CPU más corta. |
+| **SRTF** (*Shortest Remaining Time First*) | Apropiativo | Selecciona el proceso con menor tiempo de CPU restante y puede desalojar al que está ejecutándose. |
+| **Round Robin (RR)** | Apropiativo | Distribuye la CPU mediante una cola circular y un *quantum* configurable. |
+
+**Comparación completa:** la interfaz permite ejecutar los cuatro algoritmos de manera secuencial sobre el conjunto de procesos recuperado de la base de datos, utilizando los parámetros de memoria y reemplazo seleccionados.
+
+<a id="gestion-de-memoria-y-mmu"></a>
+### 2. Gestión de memoria y MMU
+
+El módulo `GestorMemoria` representa la administración de memoria mediante paginación y marcos físicos de RAM.
+
+- **Paginación:** calcula la cantidad de páginas necesarias para cada proceso a partir de su tamaño y del tamaño de página configurado.
+- **Marcos de RAM:** administra los marcos físicos disponibles y registra qué proceso y página ocupa cada uno.
+- **MMU:** traduce direcciones lógicas a direcciones físicas utilizando el número de página, el desplazamiento y el marco asignado. La dirección física se presenta en hexadecimal.
+- **Fallos de página (*Page Faults*):** detecta los accesos a páginas que no se encuentran presentes en RAM.
+- **Reemplazo de páginas:** permite seleccionar entre FIFO y LRU cuando se necesita liberar un marco ocupado.
+- **Fragmentación interna:** calcula el espacio asignado que no aprovecha el proceso por efecto del tamaño fijo de las páginas.
 
 | Algoritmo | Descripción |
 |---|---|
-| **FCFS** (First-Come, First-Served) | Planificación no apropiativa que ejecuta los procesos según su orden de llegada. |
-| **SJF** (Shortest Job First) | Planificación no apropiativa que selecciona el proceso con la ráfaga de CPU más corta. |
-| **SRTF** (Shortest Remaining Time First) | Variante apropiativa de SJF que desaloja la CPU cuando ingresa un proceso con menor tiempo restante. |
-| **Round Robin (RR)** | Planificación apropiativa que utiliza un *quantum* configurable y una cola circular. |
+| **FIFO** (*First-In, First-Out*) | Selecciona para reemplazo la página que lleva más tiempo cargada en memoria. |
+| **LRU** (*Least Recently Used*) | Selecciona la página cuyo último acceso registrado es el más antiguo. |
 
-**Modo de comparación completa:** permite ejecutar secuencialmente los cuatro algoritmos sobre el mismo conjunto de procesos para comparar sus resultados y métricas de rendimiento.
+> **Alcance de la simulación:** las páginas que no están presentes en RAM se representan como páginas no residentes en memoria secundaria (*Swap/Disco*). El proyecto modela su presencia, los fallos y los reemplazos, pero no implementa un sistema de intercambio real ni la transferencia de contenido de páginas a un dispositivo físico.
 
-### 2. Gestión de memoria y MMU
+<a id="concurrencia-y-sincronizacion"></a>
+### 3. Concurrencia y sincronización
 
-Implementación de un sistema de memoria virtual mediante **paginación bajo demanda**, con traducción de direcciones y administración de marcos físicos.
+El simulador incorpora hilos y semáforos para representar la coordinación entre la llegada de procesos, el motor de simulación y el acceso a recursos compartidos.
 
-- **División lógica y física:** cálculo automático de las páginas necesarias para cada proceso, asignación de marcos físicos en RAM mediante `MarcoRAM` y medición de la fragmentación interna.
-- **Unidad de Manejo de Memoria (MMU):** traducción de direcciones lógicas a direcciones físicas en hexadecimal durante cada *tick* de simulación.
-- **Traducción de direcciones:** conversión de página lógica y desplazamiento en una dirección física a partir del marco de RAM asignado.
-- **Fallos de página (*Page Faults*):** detección de páginas que no se encuentran cargadas en memoria principal.
-- **Memoria virtual y *swapping*:** admisión de procesos incluso cuando la RAM está llena, utilizando memoria secundaria para almacenar páginas temporalmente.
-- **Algoritmos de reemplazo de páginas:**
-  - **FIFO** (*First-In, First-Out*): reemplaza la página que lleva más tiempo en memoria.
-  - **LRU** (*Least Recently Used*): reemplaza la página que lleva más tiempo sin utilizarse.
+#### 🔄 Productor-consumidor
 
-### 3. Concurrencia y sincronización en tiempo real
+- `HiloProductor`: inyecta los procesos en el sistema respetando sus tiempos de llegada.
+- `BufferProcesos`: mantiene una cola compartida con capacidad limitada.
+- **Semáforos contadores:** `vacios` y `llenos` coordinan la disponibilidad de espacios y elementos.
+- **Mutex:** protege las operaciones de acceso a la cola compartida.
 
-El proyecto incorpora mecanismos de sincronización para simular la interacción entre procesos e hilos concurrentes.
+El productor y el motor utilizan una escala temporal de simulación en la que **un tick equivale aproximadamente a 500 ms**.
 
-#### 🔄 Problema del productor-consumidor
+#### 🖨️ Recurso compartido: impresora virtual
 
-Implementación mediante:
+La clase `ImpresoraVirtual` representa un recurso de entrada/salida protegido mediante un semáforo binario (`Semaphore`). El motor realiza intentos de acceso durante la ejecución para ilustrar la sección crítica y la exclusión mutua.
 
-- `HiloProductor`: genera e inyecta procesos en tiempo real, respetando sus tiempos de llegada.
-- `BufferProcesos`: administra una cola compartida y sincronizada.
-- Semáforos contadores: `vacios` y `llenos`, para controlar la disponibilidad de espacios y elementos.
-- Semáforo binario `mutex`: protege el acceso concurrente al búfer.
+<a id="persistencia-con-jpa-hibernate-y-h2"></a>
+### 4. Persistencia con JPA, Hibernate y H2
 
-#### 🖨️ Exclusión mutua y sección crítica
+La persistencia separa los datos que se almacenan de los atributos temporales utilizados durante cada simulación.
 
-La clase `ImpresoraVirtual` representa un recurso compartido de entrada/salida (E/S). Su acceso está protegido mediante un **mutex**, implementado con `java.util.concurrent.Semaphore`, para ilustrar la exclusión mutua y la coordinación de procesos concurrentes.
+- **JPA 2.2:** define el mapeo objeto-relacional de la entidad `Proceso`.
+- **Hibernate 5.6.15.Final:** implementa la capa de persistencia ORM.
+- **H2 2.2.224:** proporciona una base de datos relacional embebida, almacenada localmente y sin necesidad de instalar un servidor externo.
+- **Patrón DAO:** `IProcesoDao` define las operaciones de acceso a datos y `ProcesoDaoImpl` las implementa mediante `EntityManager` y consultas JPQL.
+- **Atributos persistentes y transitorios:** los datos de identificación y parámetros básicos del proceso se almacenan; el estado de ejecución, la tabla de páginas y las métricas temporales se reconstruyen al recuperar los procesos.
 
-### 4. Persistencia ORM y base de datos embebida
+Si la tabla de procesos está vacía al iniciar la aplicación, `Main` carga un conjunto inicial de cinco procesos de ejemplo.
 
-El simulador incorpora una capa de persistencia basada en **JPA, Hibernate y H2 Database**.
+<a id="interfaz-grafica-y-reportes"></a>
+### 5. Interfaz gráfica y reportes
 
-- **JPA + Hibernate:** mapeo objeto-relacional de la entidad `Proceso`, separando los atributos persistentes (`@Id`, `@Basic`) de los atributos transitorios del estado de simulación (`@Transient`).
-- **Patrón DAO:** abstracción del acceso a datos mediante `IProcesoDao` y `ProcesoDaoImpl`.
-- **Consultas JPQL:** recuperación y manipulación de los datos persistidos.
-- **Base de datos H2:** almacenamiento relacional portable que no requiere instalar un servidor de base de datos externo.
-- **Consola web H2:** servidor web integrado que se inicia automáticamente en el puerto `8082`.
-- **Reconstrucción del estado:** recuperación de los atributos `@Transient` necesarios para la simulación mediante la implementación DAO.
+#### 🖥️ Interfaz de escritorio
 
-### 5. Interfaz gráfica MVC y reportes ejecutivos PDF
+La aplicación utiliza **Java Swing** y una organización **Modelo-Vista-Controlador (MVC)**.
 
-#### 🖥️ Interfaz gráfica
+Desde la ventana principal se puede:
 
-La aplicación utiliza una arquitectura **Modelo-Vista-Controlador (MVC)** para separar las responsabilidades del sistema.
+- Seleccionar FCFS, SJF, SRTF, Round Robin o la comparación completa.
+- Configurar el tamaño de RAM y el tamaño de página.
+- Definir el *quantum* de Round Robin.
+- Seleccionar el algoritmo de reemplazo FIFO o LRU.
+- Agregar procesos a la base de datos.
+- Iniciar simulaciones y observar la salida del motor en una consola integrada.
 
-- **Modelo:** representa los procesos, sus estados, la memoria y las métricas.
-- **Vista:** interfaz de escritorio desarrollada con Java Swing.
-- **Controlador:** administra los eventos de la interfaz y coordina la ejecución de las simulaciones.
-- **Ejecución concurrente:** permite realizar simulaciones en hilos de trabajo en segundo plano, evitando bloquear la interfaz gráfica.
-- **Consola integrada:** captura y presenta la salida estándar (`System.out`) de manera segura mediante el *Event Dispatch Thread* (EDT).
+La ejecución de las simulaciones se inicia en un hilo de trabajo separado para evitar bloquear la interfaz. La salida de consola se presenta en el área de texto de Swing mediante el Event Dispatch Thread (EDT).
 
 #### 📄 Exportación de reportes PDF
 
-Integración de **JFreeChart** e **iText 5** para generar reportes estadísticos opcionales en la carpeta `Reportes Simulacion/`.
+Al finalizar cada simulación, la aplicación permite solicitar la generación de un reporte PDF. Para ello utiliza:
 
-Los reportes pueden incluir:
+- **iText 5.5.13.3:** composición y generación del documento PDF.
+- **JFreeChart 1.5.3:** generación del gráfico de barras de métricas.
 
-- Tablas detalladas con las métricas de cada proceso.
-- Promedios generales de rendimiento.
-- Diagramas de Gantt de la planificación.
-- Gráficos de barras comparativos de tiempos de retorno y espera.
+Los reportes se guardan en `Reportes Simulacion/` e incluyen información por proceso, promedios, el historial del diagrama de Gantt y un gráfico comparativo de tiempos de retorno y espera.
 
 ---
 
-## 🛠️ Stack tecnológico y arquitectura
+<a id="stack-tecnologico"></a>
+## 🛠️ Stack tecnológico
 
-| Capa / Módulo | Tecnologías y patrones aplicados |
-|---|---|
-| **Lenguaje y construcción** | Java (JDK 17+) y Apache Maven |
-| **Arquitectura general** | MVC (Modelo-Vista-Controlador) |
-| **Planificación de CPU** | Patrón Strategy |
-| **Concurrencia** | `Thread`, `Semaphore`, mutex y semáforos contadores |
-| **Persistencia** | Patrón DAO, JPA (`javax.persistence`) e Hibernate Core 5.6 |
-| **Base de datos** | H2 Database 2.2 |
-| **Interfaz gráfica (GUI)** | Java Swing: `JFrame`, `BorderLayout`, `GridLayout` y `SwingUtilities` |
-| **Reportes PDF** | iTextPDF 5.5 |
-| **Gráficos estadísticos** | JFreeChart 1.5 |
-| **Memoria virtual** | MMU, paginación bajo demanda, FIFO y LRU |
+| Componente | Tecnología | Uso |
+|---|---|---|
+| Lenguaje | Java 25 | Implementación del simulador. |
+| Construcción | Apache Maven | Gestión de dependencias y compilación. |
+| Interfaz gráfica | Java Swing | Ventana de configuración y consola integrada. |
+| Arquitectura | MVC | Separación entre modelo, vista y controlador. |
+| Planificación | Patrón Strategy | Intercambio de algoritmos de planificación. |
+| Concurrencia | `Thread` y `Semaphore` | Productor-consumidor, mutex y ejecución en segundo plano. |
+| Persistencia | JPA 2.2 y Hibernate 5.6.15.Final | Mapeo objeto-relacional. |
+| Base de datos | H2 2.2.224 | Almacenamiento relacional embebido. |
+| Gráficos | JFreeChart 1.5.3 | Gráficos estadísticos para los reportes. |
+| PDF | iText 5.5.13.3 | Generación de reportes. |
+
+Las versiones indicadas corresponden a las propiedades y dependencias declaradas en `SimuladorSO/pom.xml`.
 
 ---
 
-## 📂 Estructura del proyecto
+<a id="organizacion-del-proyecto"></a>
+## 🏗️ Organización del proyecto
+
+El repositorio contiene el README y los recursos gráficos en la raíz. El proyecto Maven se encuentra dentro de `SimuladorSO/`.
 
 ```text
-simulador/
-├── Main.java                         # Punto de entrada: inicia H2, el DAO y la arquitectura MVC
+Simulador-Planificacion-CPU-Memoria/
+├── .gitignore
+├── README.md
+├── Screenshots/
+│   ├── H2_Consola.jpeg
+│   ├── Ventana Principal 1.jpeg
+│   └── Ventana Principal 2.jpeg
 │
-├── concurrencia/
-│   ├── BufferProcesos.java           # Cola compartida protegida mediante semáforos
-│   ├── HiloProductor.java             # Hilo que inyecta procesos según su tiempo de llegada
-│   └── ImpresoraVirtual.java          # Recurso de E/S protegido por mutex
-│
-├── controlador/
-│   └── ControladorSimulador.java      # Gestiona eventos de la GUI y lanza simulaciones
-│
-├── dao/
-│   ├── IProcesoDao.java               # Contrato de operaciones CRUD sobre procesos
-│   └── ProcesoDaoImpl.java            # Implementación JPA/Hibernate y reconstrucción de estado
-│
-├── memoria/
-│   └── GestorMemoria.java             # RAM, MMU, fallos de página y reemplazo FIFO/LRU
-│
-├── modelo/
-│   ├── EntradaTablaPagina.java        # Página lógica, bit de presencia y marco asignado
-│   ├── EstadoProceso.java             # Estados del ciclo de vida de un proceso
-│   ├── MarcoRAM.java                  # Representación de un marco físico de RAM
-│   └── Proceso.java                   # Entidad JPA y Bloque de Control de Proceso (PCB)
-│
-├── motor/
-│   └── MotorSimulacion.java           # Reloj global, despacho de CPU, trazabilidad y Gantt
-│
-├── planificador/
-│   ├── PlanificadorStrategy.java      # Interfaz común de los algoritmos de planificación
-│   ├── PlanificadorFCFS.java          # First-Come, First-Served
-│   ├── PlanificadorSJF.java           # Shortest Job First (no apropiativo)
-│   ├── PlanificadorSRTF.java          # Shortest Remaining Time First (apropiativo)
-│   └── PlanificadorRoundRobin.java    # Round Robin con quantum configurable
-│
-├── reportes/
-│   └── GeneradorReporte.java          # Gráficos estadísticos y generación de PDF
-│
-└── vista/
-    └── VentanaPrincipal.java          # Interfaz Swing con consola en tiempo real
+└── SimuladorSO/
+    ├── pom.xml
+    └── src/
+        └── main/
+            ├── java/
+            │   └── simulador/
+            │       ├── Main.java
+            │       ├── concurrencia/
+            │       │   ├── BufferProcesos.java
+            │       │   ├── HiloProductor.java
+            │       │   └── ImpresoraVirtual.java
+            │       ├── controlador/
+            │       │   └── ControladorSimulador.java
+            │       ├── dao/
+            │       │   ├── IProcesoDao.java
+            │       │   └── ProcesoDaoImpl.java
+            │       ├── memoria/
+            │       │   └── GestorMemoria.java
+            │       ├── modelo/
+            │       │   ├── EntradaTablaPagina.java
+            │       │   ├── EstadoProceso.java
+            │       │   ├── MarcoRAM.java
+            │       │   └── Proceso.java
+            │       ├── motor/
+            │       │   └── MotorSimulacion.java
+            │       ├── planificador/
+            │       │   ├── PlanificadorFCFS.java
+            │       │   ├── PlanificadorRoundRobin.java
+            │       │   ├── PlanificadorSJF.java
+            │       │   ├── PlanificadorSRTF.java
+            │       │   └── PlanificadorStrategy.java
+            │       ├── reportes/
+            │       │   └── GeneradorReporte.java
+            │       └── vista/
+            │           └── VentanaPrincipal.java
+            │
+            └── resources/
+                └── META-INF/
+                    └── persistence.xml
 ```
 
 ---
 
-## ⚙️ Instalación y ejecución
+<a id="requisitos-e-instalacion"></a>
+## ⚙️ Requisitos e instalación
 
-### ✅ Requisitos previos
+### Requisitos previos
 
-Antes de ejecutar el proyecto, asegurate de tener instalados:
+- **Java JDK 25:** el `pom.xml` configura `maven.compiler.release` en `25`.
+- **Apache Maven 3.6.3 o posterior:** necesario para compilar y para ejecutar el objetivo de `exec-maven-plugin` indicado más abajo.
+- **Git:** para clonar el repositorio.
 
-- **Java JDK 17 o superior.**
-- **Apache Maven.**
-- **Git**, para clonar el repositorio.
-
-Podés verificar las instalaciones con los siguientes comandos:
+Podés comprobar las herramientas instaladas con:
 
 ```bash
 java -version
@@ -194,135 +254,112 @@ git --version
 
 ### 1. Clonar el repositorio
 
-Reemplazá `tu-usuario` por el nombre de usuario o la organización propietaria del repositorio.
-
 ```bash
-git clone https://github.com/tu-usuario/simulador-planificacion-cpu-memoria.git
-
-cd simulador-planificacion-cpu-memoria
+git clone https://github.com/TomasMoroz04/Simulador-Planificacion-CPU-Memoria.git
+cd Simulador-Planificacion-CPU-Memoria/SimuladorSO
 ```
 
 ### 2. Compilar el proyecto
 
-Ejecutá Maven para limpiar, compilar y empaquetar el proyecto:
+Ejecutá Maven desde el directorio `SimuladorSO`, donde se encuentra el `pom.xml`:
 
 ```bash
-mvn clean install
+mvn clean package
 ```
-
-### 3. Ejecutar la aplicación
-
-Iniciá el simulador mediante Maven:
-
-```bash
-mvn exec:java -Dexec.mainClass="simulador.Main"
-```
-
-> **Nota:** el comando `mvn exec:java` requiere que el proyecto tenga configurado el plugin `exec-maven-plugin` en el archivo `pom.xml`.
-
-También podés abrir el proyecto desde un IDE compatible con Java, como NetBeans, e iniciar la clase `simulador.Main`.
 
 ---
 
-## 🗄️ Acceso a la base de datos H2 en vivo
+<a id="ejecucion"></a>
+## ▶️ Ejecución
 
-Mientras el simulador está en ejecución, se inicia automáticamente un servidor web para inspeccionar la base de datos relacional.
+Desde el mismo directorio `SimuladorSO`, ejecutá la clase principal mediante el objetivo `java` de Exec Maven Plugin:
 
-### 1. Abrir la consola
+```bash
+mvn org.codehaus.mojo:exec-maven-plugin:3.6.4:java -Dexec.mainClass=simulador.Main
+```
 
-Ingresá desde tu navegador a la siguiente dirección:
+El `pom.xml` declara la propiedad `exec.mainClass` con el valor `simulador.Main`, pero no declara el plugin dentro de `<build><plugins>`. Por eso, el comando utiliza las coordenadas completas del plugin y especifica su versión.
+
+Al iniciar, la aplicación:
+
+1. Intenta iniciar la consola web de H2 en el puerto `8082`.
+2. Inicializa el DAO y la conexión con la base de datos.
+3. Carga cinco procesos de ejemplo si la tabla está vacía.
+4. Abre la ventana principal de Swing.
+
+---
+
+<a id="consola-web-de-h2"></a>
+## 🗄️ Consola web de H2
+
+Mientras la aplicación está ejecutándose, podés acceder a la consola web de H2 desde el navegador:
 
 **[http://localhost:8082](http://localhost:8082)**
 
-### 2. Configurar la conexión
-
-Introducí los siguientes parámetros:
+Utilizá los siguientes parámetros de conexión, definidos en `src/main/resources/META-INF/persistence.xml`:
 
 | Parámetro | Valor |
 |---|---|
 | **Driver Class** | `org.h2.Driver` |
-| **JDBC URL** | `jdbc:h2:./simuladorDB` |
+| **JDBC URL** | `jdbc:h2:./simuladorDB;DB_CLOSE_DELAY=-1` |
 | **User Name** | `sa` |
-| **Password** | Dejar en blanco |
+| **Password** | Vacía |
 
-### 3. Consultar los procesos
+La ruta `./simuladorDB` es relativa al directorio de trabajo desde el que se inicia la aplicación. Por eso, los comandos de ejecución anteriores se realizan desde `SimuladorSO/`.
 
-Una vez establecida la conexión, ejecutá la siguiente consulta SQL:
+Una vez conectada la consola, podés consultar los procesos almacenados con:
 
 ```sql
 SELECT * FROM PROCESO;
 ```
 
-Esto permite visualizar los registros de procesos almacenados en la base de datos.
-
 ---
 
-## 📊 Fórmulas y métricas calculadas
+<a id="metricas-de-simulacion"></a>
+## 📊 Métricas de simulación
 
-Al finalizar cada simulación, el sistema calcula distintas métricas para evaluar el rendimiento de los algoritmos de planificación y la utilización de la memoria.
+Al finalizar una ejecución, el motor presenta una tabla con datos individuales y promedios del conjunto de procesos.
 
 ### ⏱️ Tiempo de retorno
 
-Representa el tiempo total transcurrido desde la llegada de un proceso hasta su finalización.
+Tiempo transcurrido desde la llegada del proceso hasta su finalización:
 
-<p align="center">
-  <strong>T<sub>r</sub> = T<sub>f</sub> − T<sub>l</sub></strong>
-</p>
-
-**Donde:**
-
-- <strong>T<sub>r</sub></strong>: tiempo de retorno.
-- <strong>T<sub>f</sub></strong>: tiempo de finalización.
-- <strong>T<sub>l</sub></strong>: tiempo de llegada.
+\[
+T_{retorno} = T_{finalizacion} - T_{llegada}
+\]
 
 ### ⏳ Tiempo de espera
 
-Representa el tiempo durante el cual un proceso permanece esperando para utilizar la CPU, considerando una única ráfaga de CPU y sin contabilizar tiempos adicionales de E/S.
+Para el modelo de una única ráfaga de CPU utilizado por este simulador, se calcula como:
 
-<p align="center">
-  <strong>T<sub>e</sub> = T<sub>r</sub> − T<sub>CPU</sub></strong>
-</p>
-
-**Donde:**
-
-- <strong>T<sub>e</sub></strong>: tiempo de espera.
-- <strong>T<sub>r</sub></strong>: tiempo de retorno.
-- <strong>T<sub>CPU</sub></strong>: duración de la ráfaga de CPU.
+\[
+T_{espera} = T_{retorno} - T_{CPU}
+\]
 
 ### 🧠 Fragmentación interna
 
-Representa el espacio de memoria asignado que no es utilizado por el proceso debido a la división de la memoria en páginas de tamaño fijo.
+Espacio asignado mediante páginas que no es utilizado por el proceso:
 
-<p align="center">
-  <strong>F<sub>i</sub> = (N<sub>p</sub> × T<sub>p</sub>) − T<sub>proceso</sub></strong>
-</p>
+\[
+F_{interna} = (N_{paginas} \times T_{pagina}) - T_{proceso}
+\]
 
-**Donde:**
+### 📈 Indicadores adicionales
 
-- <strong>F<sub>i</sub></strong>: fragmentación interna, en bytes.
-- <strong>N<sub>p</sub></strong>: cantidad de páginas asignadas.
-- <strong>T<sub>p</sub></strong>: tamaño de página, en bytes.
-- <strong>T<sub>proceso</sub></strong>: tamaño del proceso, en bytes.
-
-### 📈 Otras métricas
-
-El simulador también registra:
-
-- **Fallos de página (*Page Faults*):** cantidad de veces que se necesita acceder a una página que no está presente en RAM.
-- **Reemplazos de páginas:** cantidad de reemplazos de marcos físicos mediante los algoritmos FIFO o LRU.
-- **Diagramas de Gantt:** representación temporal de la ejecución de los procesos según el algoritmo seleccionado.
-- **Tiempos de retorno y espera:** valores individuales y promedios que permiten comparar el rendimiento de los planificadores.
+- **Fallos de página:** cantidad de accesos a páginas no presentes en RAM.
+- **Reemplazos de páginas:** cantidad de sustituciones de marcos físicos mediante FIFO o LRU.
+- **Diagrama de Gantt:** secuencia temporal que muestra qué proceso utilizó la CPU en cada tick, incluyendo períodos de inactividad.
+- **Promedios del sistema:** tiempo medio de retorno y tiempo medio de espera.
 
 ---
 
-## 🎯 Objetivo del proyecto
+<a id="licencia"></a>
+## 📄 Licencia
 
-El objetivo es integrar y visualizar conceptos fundamentales de **Sistemas Operativos**, permitiendo experimentar con algoritmos de planificación, memoria virtual, concurrencia, sincronización y persistencia de datos en una aplicación interactiva.
-
-A través de la simulación y la comparación de resultados, el proyecto facilita la comprensión de cómo las decisiones de planificación y administración de recursos influyen en el rendimiento general de un sistema operativo.
+El repositorio no contiene actualmente un archivo `LICENSE` ni declara una licencia en sus metadatos de GitHub. Por lo tanto, este README no atribuye una licencia de uso, modificación o redistribución al proyecto.
 
 ---
 
 <p align="center">
-  <b>Desarrollado en Java ☕ | Sistemas Operativos | Planificación de CPU y Gestión de Memoria</b>
+  <strong>Desarrollado en Java ☕ | Sistemas Operativos | Planificación de CPU y Gestión de Memoria</strong>
 </p>
