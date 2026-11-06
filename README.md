@@ -324,25 +324,25 @@ Al finalizar una ejecución, el motor presenta una tabla con datos individuales 
 
 Tiempo transcurrido desde la llegada del proceso hasta su finalización:
 
-\[
+$$
 T_{retorno} = T_{finalizacion} - T_{llegada}
-\]
+$$
 
 ### ⏳ Tiempo de espera
 
 Para el modelo de una única ráfaga de CPU utilizado por este simulador, se calcula como:
 
-\[
+$$
 T_{espera} = T_{retorno} - T_{CPU}
-\]
+$$
 
 ### 🧠 Fragmentación interna
 
 Espacio asignado mediante páginas que no es utilizado por el proceso:
 
-\[
+$$
 F_{interna} = (N_{paginas} \times T_{pagina}) - T_{proceso}
-\]
+$$
 
 ### 📈 Indicadores adicionales
 
